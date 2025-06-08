@@ -19,6 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.mehdizadeh.catfeed.navigation.manager.LocalNavigationManager
 import com.mehdizadeh.catfeed.navigation.manager.NavigationManager
+import com.mehdizadeh.catfeed.navigation.screen.appScreens
 import com.mehdizadeh.catfeed.ui.theme.CatTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,7 +57,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
             navController = navigationManager.navController,
             startDestination = navigationManager.getStartDestination().route,
         ) {
-
+            appScreens()
         }
     }
 }

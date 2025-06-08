@@ -18,7 +18,7 @@ object Network {
     @Provides
     @Singleton
     fun provideGson(): Gson = GsonBuilder().create()
-
+    val apiKey = "live_Ug3jYoYsbhuPCQoZoxIzqLVrOnhVKEg88hh4LJXGEljjaWdknxBR57WgOTJZxNBa"
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient =
@@ -26,7 +26,9 @@ object Network {
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
+            .addInterceptor(ApiKeyInterceptor(apiKey))
             .build()
+
 
     @Provides
     @Singleton
@@ -34,10 +36,9 @@ object Network {
         okHttpClient: OkHttpClient,
         gson: Gson
     ): Retrofit = Retrofit.Builder()
-        .baseUrl("https://api.auth.com/")
+        .baseUrl("https://api.thecatapi.com/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
-
 
 }

@@ -14,11 +14,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    initialState: MainActivityViewState,
     private val saveThemeUseCase: SaveThemeModeUseCase,
     private val getThemeUseCase: GetThemeModeUseCase
 ) : BaseViewModel<MainActivityViewActions, MainActivityViewState, MainActivityViewEvents>(
-    initialState
+    MainActivityViewState()
 ) {
 
     init {

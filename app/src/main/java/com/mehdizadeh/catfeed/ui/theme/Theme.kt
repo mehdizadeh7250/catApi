@@ -1,42 +1,29 @@
 package com.mehdizadeh.catfeed.ui.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import com.mehdizadeh.catfeed.domain.repository.ThemeMode
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+object AppTheme {
+    val colorScheme: CustomColors
+        @ReadOnlyComposable
+        @Composable
+        get() = LocalColors.current
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
+}
+
+val LocalColors = staticCompositionLocalOf { lightColors() }
 
 @Composable
 fun CatTheme(
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     themeMode: ThemeMode = ThemeMode.LIGHT,
     content: @Composable () -> Unit
 ) {
@@ -45,19 +32,16 @@ fun CatTheme(
         ThemeMode.DARK -> true
         ThemeMode.SYSTEM -> isSystemInDarkTheme()
     }
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+
+    val currentColor = if (darkTheme) darkColors() else lightColors()
+    val rememberedColors = remember(currentColor) { currentColor.copy() }.apply {
+        updateColorsFrom(currentColor)
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalColors provides rememberedColors,
+    ) {
+        ProvideTextStyle(typography.bodyMedium, content = content)
+    }
 }

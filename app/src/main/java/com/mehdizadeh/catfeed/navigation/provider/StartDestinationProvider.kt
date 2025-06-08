@@ -9,6 +9,6 @@ interface NavigationStartDestinationProvider {
 
 object DefaultStartDestinationProvider : NavigationStartDestinationProvider {
     override fun getStartDestination(): Screen {
-        return AppScreens.Splash
+        return AppScreens.AppScreenGraph
     }
 }

@@ -2,10 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.plugin)
+    id("kotlin-parcelize")
 }
-
 android {
     namespace = "com.mehdizadeh.catfeed"
     compileSdk = 35
@@ -66,12 +66,13 @@ dependencies {
     // OkHttp
     implementation(libs.okHttp)
     implementation(libs.okHttp.logging.interceptor)
-    ksp(libs.hilt.android.compiler)
-    ksp(libs.hilt.compiler)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
     implementation(libs.dataStore)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
+//    kapt(libs.room.compiler)
+    implementation ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.9.0")
 
 }

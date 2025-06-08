@@ -4,13 +4,12 @@ import com.mehdizadeh.catfeed.di.dataStore.PreferenceStorage
 import com.mehdizadeh.catfeed.di.dataStore.PreferenceStorage.Companion.THEME_KEY
 import com.mehdizadeh.catfeed.domain.repository.ThemeMode
 import com.mehdizadeh.catfeed.domain.repository.ThemeRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ThemeRepositoryImpl @Inject constructor(
-    @ApplicationContext private val preferenceStorage: PreferenceStorage,
+    private val preferenceStorage: PreferenceStorage,
 ) : ThemeRepository {
     override suspend fun saveThemeMode(mode: ThemeMode) {
         preferenceStorage.set(THEME_KEY, mode.name)
