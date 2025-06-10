@@ -3,18 +3,23 @@ package com.mehdizadeh.catfeed.presentation.screen.details
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.twotone.Info
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -78,9 +83,15 @@ fun DetailsScreen() {
                 item { Text("Child Friendly: ${breed.childFriendly}") }
                 item { Text("Energy Level: ${breed.energyLevel}") }
                 item {
-                    Text("Wikipedia Url: ${breed.wikipediaUrl}", modifier = Modifier.clickable {
-                        breed.wikipediaUrl?.let { context.openWebPage(it) }
-                    })
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clickable { breed.wikipediaUrl?.let { context.openWebPage(it) } }
+                    ) {
+                        Icon(Icons.TwoTone.Info, contentDescription = "Wikipedia")
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = "View on Wikipedia", color = MaterialTheme.colorScheme.primary)
+                    }
                 }
             }
         }

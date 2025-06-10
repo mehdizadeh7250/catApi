@@ -35,6 +35,7 @@ data class CatBreed(
     val imageUrl: String? = "",
     val weightImperial: String = "",
     val weightMetric: String = "",
+    val isFavorite : Boolean = false,
     val referenceImageId: String = ""
 ): Parcelable
 

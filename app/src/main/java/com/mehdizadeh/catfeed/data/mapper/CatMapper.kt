@@ -34,7 +34,5 @@ fun CatBreedsDto.toDomain(): CatBreed = CatBreed(
     imageUrl = image?.url,
     weightImperial = weight.imperial,
     referenceImageId = referenceImageId,
-    weightMetric = weight.metric
+    weightMetric = weight.metric,
 )
-//fun CatEntity.toDomain() = Note(id = id, catName = catName)
-//fun Note.toEntity() = CatEntity(id = id, catName = content)

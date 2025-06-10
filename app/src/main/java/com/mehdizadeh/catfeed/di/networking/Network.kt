@@ -70,8 +70,8 @@ object Network {
             .cache(cache)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(apiKeyInterceptor)
-            .addInterceptor(offlineCacheInterceptor)
-            .addNetworkInterceptor(cacheInterceptor)
+//            .addInterceptor(offlineCacheInterceptor)
+//            .addNetworkInterceptor(cacheInterceptor)
             .build()
     }
 
