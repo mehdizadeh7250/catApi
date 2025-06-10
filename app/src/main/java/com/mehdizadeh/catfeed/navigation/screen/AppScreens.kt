@@ -4,6 +4,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.mehdizadeh.catfeed.presentation.screen.details.DetailsScreen
 import com.mehdizadeh.catfeed.presentation.screen.home.HomeScreen
 import com.mehdizadeh.catfeed.presentation.screen.home.viewModel.HomeViewModel
 
@@ -21,6 +22,9 @@ fun NavGraphBuilder.appScreens(
     ) {
         composable(route = AppScreens.HomeScreen.route) {
             HomeScreen(viewModel = hiltViewModel<HomeViewModel>())
+        }
+        composable(route = AppScreens.DetailScreen.route) {
+            DetailsScreen()
         }
     }
 

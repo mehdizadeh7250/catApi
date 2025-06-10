@@ -2,7 +2,7 @@ package com.mehdizadeh.catfeed.data.repository
 
 import com.mehdizadeh.catfeed.core.Result
 import com.mehdizadeh.catfeed.di.ApiServices
-import com.mehdizadeh.catfeed.domain.mapper.toDomain
+import com.mehdizadeh.catfeed.data.mapper.toDomain
 import com.mehdizadeh.catfeed.domain.model.CatBreed
 import com.mehdizadeh.catfeed.domain.repository.CatBreedRepository
 import kotlinx.coroutines.flow.Flow

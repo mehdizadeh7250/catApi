@@ -35,10 +35,19 @@ class HomeViewModel @Inject constructor(
                 .collectLatest { result ->
                     when (result) {
                         is Result.Success -> {
-                            setState {
-                                it.copy(
-                                    catBreeds = result.data,
-                                    isLoading = false
+                            val isNewPage = params.page > 0
+                            setState { state ->
+                                state.copy(
+                                    catBreeds = if (isNewPage) {
+                                        state.catBreeds + result.data
+                                    } else {
+                                        result.data
+                                    },
+                                    isLoading = false,
+                                    isRefreshing = false,
+                                    isLoadingMore = false,
+                                    page = params.page,
+                                    endReached = result.data.isEmpty()
                                 )
                             }
                         }
@@ -47,6 +56,8 @@ class HomeViewModel @Inject constructor(
                             setState {
                                 it.copy(
                                     isLoading = false,
+                                    isRefreshing = false,
+                                    isLoadingMore = false,
                                     error = result.message
                                 )
                             }
@@ -55,7 +66,9 @@ class HomeViewModel @Inject constructor(
                         is Result.Loading -> {
                             setState {
                                 it.copy(
-                                    isLoading = true
+                                    isLoading = params.page == 0 && !it.isRefreshing,
+                                    isRefreshing = params.page == 0 && it.catBreeds.isNotEmpty(),
+                                    isLoadingMore = params.page > 0
                                 )
                             }
                         }
