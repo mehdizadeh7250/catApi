@@ -21,7 +21,8 @@ import javax.inject.Singleton
 object Network {
     private const val CACHE_SIZE = (10 * 1024 * 1024).toLong()
     private const val BASE_URL = "https://api.thecatapi.com/"
-    private const val API_KEY = "live_Ug3jYoYsbhuPCQoZoxIzqLVrOnhVKEg88hh4LJXGEljjaWdknxBR57WgOTJZxNBa"
+    private const val API_KEY =
+        "live_Ug3jYoYsbhuPCQoZoxIzqLVrOnhVKEg88hh4LJXGEljjaWdknxBR57WgOTJZxNBa"
 
     @Provides
     @Singleton
@@ -33,6 +34,7 @@ object Network {
         val cacheDir = File(context.cacheDir, "http_cache")
         return Cache(cacheDir, CACHE_SIZE)
     }
+
     @Provides
     @Singleton
     fun provideOfflineCacheInterceptor(
@@ -46,6 +48,13 @@ object Network {
     fun provideCacheInterceptor(): CacheInterceptor {
         return CacheInterceptor()
     }
+
+    @Provides
+    @Singleton
+    fun provideNoCacheInterceptor(): NoCacheInterceptor {
+        return NoCacheInterceptor()
+    }
+
     @Provides
     @Singleton
     fun provideApiKeyInterceptor(): ApiKeyInterceptor = ApiKeyInterceptor(API_KEY)
@@ -63,6 +72,7 @@ object Network {
         cache: Cache,
         apiKeyInterceptor: ApiKeyInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,
+        noCache: NoCacheInterceptor,
         offlineCacheInterceptor: OfflineCacheInterceptor,
         cacheInterceptor: CacheInterceptor
     ): OkHttpClient {
@@ -70,8 +80,9 @@ object Network {
             .cache(cache)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(apiKeyInterceptor)
-//            .addInterceptor(offlineCacheInterceptor)
-//            .addNetworkInterceptor(cacheInterceptor)
+            .addInterceptor(noCache)
+            .addInterceptor(offlineCacheInterceptor)
+            .addNetworkInterceptor(cacheInterceptor)
             .build()
     }
 

@@ -31,7 +31,7 @@ class CatBreedRepositoryImpl @Inject constructor(
             // Pass isFavorite to toDomain
             breeds.map { catBreedDto ->
                 val domainModel = catBreedDto.toDomain()
-                val isFavorite = favoriteImageIds.contains(catBreedDto.referenceImageId)
+                val isFavorite =if (!catBreedDto.referenceImageId.isNullOrEmpty()) favoriteImageIds.contains(catBreedDto.referenceImageId) else false
                 domainModel.copy(isFavorite = isFavorite)
             }
         }
@@ -39,6 +39,7 @@ class CatBreedRepositoryImpl @Inject constructor(
     }.onStart {
         emit(Result.Loading)
     }.catch { e ->
+        Log.e("errorMessages",e.message.toString())
         emit(Result.Error(message = e.message ?: "Unknown Error", exception = e))
     }
 }

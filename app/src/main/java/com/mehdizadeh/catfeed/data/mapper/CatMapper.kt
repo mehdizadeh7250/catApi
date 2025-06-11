@@ -1,5 +1,6 @@
 package com.mehdizadeh.catfeed.data.mapper
 
+import com.mehdizadeh.catfeed.data.local.entity.CatEntity
 import com.mehdizadeh.catfeed.data.model.CatBreedsDto
 import com.mehdizadeh.catfeed.domain.model.CatBreed
 
@@ -33,6 +34,11 @@ fun CatBreedsDto.toDomain(): CatBreed = CatBreed(
     hypoallergenic = hypoallergenic,
     imageUrl = image?.url,
     weightImperial = weight.imperial,
-    referenceImageId = referenceImageId,
+    referenceImageId = referenceImageId ?: "",
     weightMetric = weight.metric,
+)
+
+fun CatBreed.toEntity(favoriteId: Int): CatEntity = CatEntity(
+    catId = referenceImageId,
+    favoriteId = favoriteId
 )

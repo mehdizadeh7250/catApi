@@ -72,8 +72,9 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-//    kapt(libs.room.compiler)
+    kapt(libs.room.compiler)
     implementation ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.9.0")
     implementation ("com.google.accompanist:accompanist-swiperefresh:0.35.0-alpha")
     implementation ("io.coil-kt:coil-compose:2.7.0")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.0")
 }

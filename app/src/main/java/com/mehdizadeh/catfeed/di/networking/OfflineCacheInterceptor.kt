@@ -15,7 +15,7 @@ class OfflineCacheInterceptor @Inject constructor(@ApplicationContext private va
         if (!isNetworkAvailable()) {
             val maxStale = 60 * 60 * 24 * 7
             request = request.newBuilder()
-                .header("Cache-Control", "public, only-if-cached, max-stale=$maxStale")
+                .header("Cache-Control", "public, max-stale=$maxStale")
                 .build()
         }
         return chain.proceed(request)

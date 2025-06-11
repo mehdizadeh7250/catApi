@@ -62,7 +62,7 @@ data class CatBreedsDto(
     @SerializedName("rare")
     val rare: Int,
     @SerializedName("reference_image_id")
-    val referenceImageId: String,
+    val referenceImageId: String ?=null,
     @SerializedName("rex")
     val rex: Int,
     @SerializedName("shedding_level")

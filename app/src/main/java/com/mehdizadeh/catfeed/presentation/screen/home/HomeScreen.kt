@@ -20,7 +20,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
@@ -28,6 +27,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
@@ -86,7 +86,9 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(state.value.catBreeds, key = { it.id }) { breed ->
-                CatBreedCard(breed) {
+                CatBreedCard(breed, favoriteClicked = {
+
+                }) {
                     navigationManager.navigate(AppScreens.DetailScreen)
                     navigationManager.setCurrentScreenData("breed", breed)
                 }
@@ -115,7 +117,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun CatBreedCard(breed: CatBreed, onClick: () -> Unit) {
+fun CatBreedCard(breed: CatBreed, favoriteClicked: () -> Unit, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -138,7 +140,12 @@ fun CatBreedCard(breed: CatBreed, onClick: () -> Unit) {
             Column {
                 Row(Modifier.fillMaxSize()) {
                     Text(text = breed.name, modifier = Modifier.weight(1f))
-                    Icon(if (!breed.isFavorite)Icons.Default.FavoriteBorder else Icons.Default.Favorite, contentDescription = "Back")
+                    IconButton(onClick = {}) {
+                        Icon(
+                            if (!breed.isFavorite) Icons.Default.FavoriteBorder else Icons.Default.Favorite,
+                            contentDescription = "Back"
+                        )
+                    }
                 }
                 Text(text = breed.origin ?: "Unknown")
                 Text(text = breed.description ?: "")

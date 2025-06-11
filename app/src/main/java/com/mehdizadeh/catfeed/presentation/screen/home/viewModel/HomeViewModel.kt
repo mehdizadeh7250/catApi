@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.mehdizadeh.catfeed.core.BaseViewModel
 import com.mehdizadeh.catfeed.core.Result
 import com.mehdizadeh.catfeed.domain.model.CatParams
+import com.mehdizadeh.catfeed.domain.useCase.DeleteFavoriteUseCase
 import com.mehdizadeh.catfeed.domain.useCase.GetCatBreedsUseCase
+import com.mehdizadeh.catfeed.domain.useCase.PostFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -12,7 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getCatBreedsUseCase: GetCatBreedsUseCase
+    private val getCatBreedsUseCase: GetCatBreedsUseCase,
+    private val postFavoriteUseCase: PostFavoriteUseCase,
+    private val deleteFavoriteUseCase: DeleteFavoriteUseCase
 ) : BaseViewModel<HomeViewActions, HomeViewState, HomeViewEvents>(
     HomeViewState()
 ) {
@@ -25,10 +29,27 @@ class HomeViewModel @Inject constructor(
             is HomeViewActions.GetBreeds -> {
                 handleGetBreeds(action)
             }
+            is HomeViewActions.PostFavorite -> {
+                handlePostFavorite(action)
+            }
+            is HomeViewActions.DeleteFavorite -> {
+                handleDeleteFavorite(action)
+            }
+        }
+    }
+    private fun handlePostFavorite(params: HomeViewActions.PostFavorite) {
+        //TODO
+    }
+    private fun handleDeleteFavorite(params: HomeViewActions.DeleteFavorite) {
+        viewModelScope.launch {
+            deleteFavoriteUseCase.invoke(Pair(params.id, params.favoriteId)).collectLatest { result->
+                setState {
+                    it.copy()//TODO
+                }
+            }
 
         }
     }
-
     private fun handleGetBreeds(params: HomeViewActions.GetBreeds) {
         viewModelScope.launch {
             getCatBreedsUseCase.invoke(CatParams(limit = params.limit, page = params.page))

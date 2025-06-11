@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cats")
 data class CatEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val catName: String,
+    @PrimaryKey()
+    val catId: String,
+    val favoriteId : Int? = null
 
 )
