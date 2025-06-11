@@ -109,16 +109,6 @@ com.mehdizadeh.catfeed
 
 ---
 
-## 📸 Screenshots
-
-<!-- Insert screenshots here -->
-```md
-<img src="screenshots/home.png" width="300">
-<img src="screenshots/detail.png" width="300">
-```
-
----
-
 ## 📁 Getting Started
 
 1. Clone the repo
